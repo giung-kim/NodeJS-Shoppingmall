@@ -1,0 +1,53 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2> 상품 수정하기</h2>
+    <a href="/admin/products" class="btn btn-primary">뒤로</a>
+</div>
+
+<p>갤러리(세부 이미지들)</p>
+<div class="gallery row">
+    <% galleryImages.forEach(image => { %>
+        <% if (image !== 'thumbs') { %>
+        <div class="col">
+            <form action="/admin/products/<%= id %>/image/<%= image %>?_method=DELETE" method="POST">
+                <button type="submit">
+                    <img src="/product-images/<%= id %>/gallery/thumbs/<%= image %>" alt="">
+                </button>
+            </form>
+        </div>
+        <% } %>
+    <% }) %>
+</div>
+<br>
+
+<form enctype="multipart/form-data" method="post" action="/admin/products/product-gallery/<%= id %>"
+    class="dropzone" id="dropzoneForm">
+    <div class="fallback">
+        <input type="file" name="file" multiple>
+        <input type="submit" value="upload">
+    </div>
+</form>
+
+
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet"
+    href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" 
+    type="text/css" 
+/>
+
+
+<script>
+    Dropzone.options.dropzoneForm = {
+        acceptedFiles: "image/*",
+        init: function() {
+            this.on("queuecomplete", file => {
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            });
+        }
+    }
+</script>
+
+<%- include('../partials/footer') %>

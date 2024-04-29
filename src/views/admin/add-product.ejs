@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2>상품 생성하기</h2>
+    <a href="/admin/products" class="btn btn-primary">뒤로</a>
+</div>
+<br>
+
+<form method="POST" action="/admin/products" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" id="title" class="form-control" name="title" placeholder="Title" required>
+    </div>
+
+    <div class="row mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="desc" id="description" class="form-control" cols="30" rows="10" placeholder="Description" required></textarea>
+    </div>
+
+    <div class="row mb-3">
+        <label for="category" class="form-label">Category</label>
+        <select name="category" id="category" class="form-control">
+            <% categories.forEach((category) => { %>
+            <option value="<%= category.slug %>"><%= category.title %></option>
+            <% }) %>
+        </select>
+    </div>
+
+    <div class="row mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" class="form-control" name="price" id="price" placeholder="Price" required>
+    </div>
+
+    <div class="row mb-3">
+        <label for="img" class="form-label">Image</label>
+        <input type="file" class="form-control" name="image" id="img" required>
+        <img src="#" id="imgPreview" alt="" class="mt-3" style="width: 100px;">
+    </div>
+    <button class="btn btn-primary mb-3">생성하기</button>
+</form>
+
+<script>
+    function readFile(inputEl) {
+        if (inputEl.files && inputEl.files[0]) {
+            let reader = new FileReader();
+            reader.readAsDataURL(inputEl.files[0]);
+            reader.onload = function(e) {
+                document.querySelector('#imgPreview').setAttribute('src', e.target.result);
+            }
+        }
+    }
+
+    document.querySelector('#img').addEventListener('change', function() {
+        readFile(this);
+    })
+</script>
+
+<%- include('../partials/footer') %>

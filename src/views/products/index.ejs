@@ -1,0 +1,51 @@
+<%- include('../partials/header') %>
+<div class="row">
+    <div class="col-xs-12 col-md-3">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="/products">모든 상품 보기</a>
+            </li>
+
+            <% categories.forEach(category => { %>
+                <li class="list-group-item">
+                    <a href="/products/<%= category.slug %>">
+                        <%= category.title %>
+                    </a>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-md-1"></div>
+    <div class="col-xs-12 col-md-8">
+        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-3 g-3">
+            <% products.forEach(product => { %>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <a class="bd-placeholder-img card-img-top"
+                            href="products/<%= product.category %>/<%= product.slug %>"
+                        >
+                            <img  style="width:100%" 
+                            src="/product-images/<%= product.id %>/<%= product.image %>"
+                            alt="product" 
+                            >  
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text"><%= product.title %></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-outline-secondary" 
+                                    href="/products/<%= product.category %>/<%= product.slug %>"
+                                    >보기</a>
+                                </div>
+                                <small class="text-muted"><%= product.price %>원</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../partials/footer') %>

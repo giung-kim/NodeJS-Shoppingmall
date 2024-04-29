@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+
+<% if (cart && cart.length > 0) { %>
+<h1>장바구니</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">이미지</th>
+            <th scope="col">이름</th>
+            <th scope="col">가격</th>
+            <th scope="col">개수</th>
+            <th scope="col">변경</th>
+            <th scope="col">가격</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% let total = 0 %>
+        <% cart.forEach(product => { %>
+        <% let sub = product.qty * product.price  %>
+        <% total += +sub %>
+        <tr>
+            <td><img style="width:100px;" src="<%= product.image %>" alt="product"></td>
+            <td><%= product.title %></td>
+            <td><%= product.price %></td>
+            <td><%= product.qty %></td>
+            <td>
+                <a class="btn btn-primary" href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
+                <a class="btn btn-danger" href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
+                <a class="btn btn-dark" href="/cart/update/<%= product.title %>?action=clear">clear</a>&nbsp;
+            </td>
+            <td><%= sub %>원</td>
+        </tr>
+        <% }) %>
+        <tr>
+            <td colspan="5"></td>
+            <td>
+                <b>합계:</b> <%= total %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4"></td>
+            <td>
+                <form action="/cart?_method=DELETE" method="POST">
+                    <button class="clearcart btn btn-danger">장바구니 비우기</button>
+                </form>
+            </td>
+            <td>
+                <a class="btn btn-primary buyout" onclick="requestPay()">결제하기</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<% } else { %>
+<h3>장바구니가 비어있습니다.</h3>
+<% } %>
+
+
+<%- include('../partials/footer') %>

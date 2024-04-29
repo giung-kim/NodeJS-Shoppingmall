@@ -1,0 +1,47 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2>상품</h2>
+    <a href="/admin/products/add-product" class="btn btn-primary">+</a>
+</div>
+
+<% if (products.length > 0) { %>
+<table class="table table-striped">
+    <thead>
+        <tr class="home">
+            <th>Product</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Product Image</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach((product) => { %>
+            <tr>
+                <td><%= product.title %></td>
+                <td><%= product.price %></td>
+                <td><%= product.category %></td>
+                <td>
+                    <img style="width: 100px;" src="/product-images/<%= product._id %>/<%= product.image %>" >
+                </td>
+                <td>
+                    <a href="/admin/products/<%= product._id %>/edit">Edit</a>
+                </td>
+                <td>
+                    <form action="/admin/products/<%= product._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-primary" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+<% } else { %>
+<div>
+    <h3>생성된 상품이 없습니다.</h3>
+</div>
+<% } %>
+
+<%- include('../partials/footer') %>

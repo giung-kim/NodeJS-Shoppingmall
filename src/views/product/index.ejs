@@ -1,0 +1,39 @@
+<%- include('../partials/header') %>
+<div class="row">
+    <h1><%= product.title %></h1>
+
+    <div class="col-xs-12 col-md-5">
+        <img style="width:100%" 
+        src="/product-images/<%= product.id %>/<%= product.image %>" 
+        alt="product">
+    </div>
+    <div class="col-xs-12 col-md-7">
+        <p>설명: <%= product.desc %></p>
+        <p>가격: <%= product.price %>원</p>
+        <% if (currentUser) { %>
+            <form action="/cart/<%= product.slug %>" method="POST">
+                <button class="btn btn-primary" role="button">카트에 추가</button>
+            </form>
+        <% } else { %>
+            <p>먼저 로그인을 해주세요.</p>
+        <% } %>
+    </div>
+
+    <div class="col-xs-12 col-md-5">
+        <div class="d-flex">
+            <% galleryImages.forEach(image => {  %>
+                <% if (image !== 'thumbs') { %>
+                    <div>
+                        <a>
+                            <img 
+                            style="width:100%" 
+                            src="/product-images/<%= product.id %>/gallery/thumbs/<%= image %>"
+                            alt="product">
+                        </a>
+                    </div>
+                <% } %>
+            <% }) %>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>

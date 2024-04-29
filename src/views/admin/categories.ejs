@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h2 class="page-title">카테고리</h2>
+    <a href="/admin/categories/add-category" class="btn btn-primary">+</a>
+</div>
+<br>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% categories.forEach((category) => { %>
+
+            
+            <tr>
+                <td><%= category.title %></td>
+                <td>
+                    <form action="/admin/categories/<%= category._id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-primary">X</button>
+                    </form>
+                </td>
+            </tr>
+
+
+        <% }) %>
+    </tbody>
+</table>
+
+
+<%- include('../partials/footer') %>
