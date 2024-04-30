@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@portone/browser-sdk": "^0.0.6",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.9",
     "connect-flash": "^0.1.1",

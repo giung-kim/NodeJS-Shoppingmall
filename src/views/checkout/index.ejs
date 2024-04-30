@@ -45,7 +45,7 @@
                 </form>
             </td>
             <td>
-                <a class="btn btn-primary buyout" onclick="requestPay()">결제하기</a>
+                <a class="btn btn-primary buyout" onclick="requestPay('<%= total %>')">결제하기</a>
             </td>
         </tr>
     </tbody>
@@ -53,6 +53,42 @@
 <% } else { %>
 <h3>장바구니가 비어있습니다.</h3>
 <% } %>
+
+
+<script>
+    IMP.init("imp54186206"); 
+
+    function requestPay(totalAmount) {
+        IMP.request_pay(
+            {
+            pg: "tosspay.tosstest",
+            pay_method: "card",
+            merchant_uid: `payment-${crypto.randomUUID()}`, // 주문 고유 번호
+            name: "MSDS",
+            amount: totalAmount,
+            buyer_email: "gw9977@gmail.com",
+            buyer_name: "김기웅",
+            buyer_tel: "010-1234-5678",
+            buyer_addr: "충청남도 용산구 영통1동",
+            buyer_postcode: "01181",
+            },function(rsp) { // callback
+            if (rsp.success) {
+                // 결제 성공 시 로직
+
+                fetch('/cart/complete-order')
+                .then(res=>{
+                    location.reload();
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            } else {
+                // 결제 실패 시 로직
+                console.log('실패', rsp);
+            }
+        });
+    }
+</script>
 
 
 <%- include('../partials/footer') %>

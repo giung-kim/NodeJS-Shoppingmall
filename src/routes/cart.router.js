@@ -93,4 +93,10 @@ router.delete('/',function(req,res){
     req.flash('success','장바구니가 비워졌습니다.')
     res.redirect('back');
 })
+
+router.get('/complete-order',function(req,res){
+    delete req.session.cart;
+
+    res.sendStatus(200);
+    })
 module.exports = router;
